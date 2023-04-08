@@ -1,7 +1,7 @@
 import { Vector } from "p5";
 import { Walker } from "./Walker";
 
-export default class Planet extends Walker {
+export class Planet extends Walker {
   public EffectedBy: Walker[] = [];
   public HistoryCount: number = 1000;
   public History: Vector[] = [];

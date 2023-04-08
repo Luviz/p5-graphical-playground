@@ -2,6 +2,7 @@ import { FC } from "react";
 import { DropSketch } from "../drop";
 import { RouteObject } from "react-router-dom";
 import { SketchCard, SketchCardProp } from "./sketchCard";
+import { Gravity } from "../gravity";
 
 type SketchType = SketchCardProp & RouteObject;
 
@@ -11,6 +12,12 @@ const _sketches: SketchType[] = [
     description: "Some object dropping",
     path: "/sketch/drop",
     element: <DropSketch />,
+  },
+  {
+    name: "Gravity",
+    description: "???",
+    path: "/sketch/gravity",
+    element: <Gravity />,
   },
 ];
 
