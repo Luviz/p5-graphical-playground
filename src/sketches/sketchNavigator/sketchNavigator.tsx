@@ -4,7 +4,7 @@ import { RouteObject } from "react-router-dom";
 import { SketchCard, SketchCardProp } from "./sketchCard";
 import { Gravity } from "../gravity";
 import { Gravity2 } from "../gravity/gravity2Sketch";
-import { MandelbrotSetSketch } from "../MandelbrotSet";
+import { MandelbrotSet2Sketch, MandelbrotSetSketch } from "../MandelbrotSet";
 
 type SketchType = SketchCardProp & RouteObject;
 
@@ -33,7 +33,13 @@ const _sketches: SketchType[] = [
     description: "The MandelbrotSet",
     path: "/sketch/mandelbrotSet",
     element: <MandelbrotSetSketch />,
-  }
+  },
+  {
+    name: "Mandelbrot Set II",
+    description: "The MandelbrotSet faster",
+    path: "/sketch/mandelbrotSet2",
+    element: <MandelbrotSet2Sketch />,
+  },
 ];
 
 export const SketchNavigator: FC = () => {
