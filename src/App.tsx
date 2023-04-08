@@ -1,11 +1,10 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from "react";
+import p5Logo from "./assets/p5.svg";
+import reactLogo from "./assets/react.svg";
+import viteLogo from "/vite.svg";
+import "./App.css";
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
     <div className="App">
       <div>
@@ -15,21 +14,16 @@ function App() {
         <a href="https://reactjs.org" target="_blank">
           <img src={reactLogo} className="logo react" alt="React logo" />
         </a>
+        <a href="https://p5js.org/" target="_blank">
+          <img src={p5Logo} className="logo p5" alt="p5 logo" />
+        </a>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <h1>Luviz's P5 Playground</h1>
+      <a className="sketch-link" href="./sketch">
+        To sketches
+      </a>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
