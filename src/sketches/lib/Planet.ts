@@ -3,7 +3,7 @@ import { Walker } from "./Walker";
 
 export class Planet extends Walker {
   public EffectedBy: Walker[] = [];
-  public HistoryCount: number = 1000;
+  public HistoryCount: number = 250;
   public History: Vector[] = [];
   public id: string = "";
 
@@ -25,18 +25,24 @@ export class Planet extends Walker {
       this.History.unshift(this.position.copy());
       this.History = this.History.splice(0, this.HistoryCount);
     }
-    super.Draw();
-    this.color.setAlpha(100);
+    
     this.p.push();
     this.p.noFill();
-    this.p.stroke(this.color);
 
     this.p.strokeWeight(5);
     this.p.beginShape();
-    for (const hist of this.History) {
-      this.p.vertex(hist.x, hist.y);
-    }
+    this.History.forEach((hist, ix) => {
+      const alpha = 100 * (1 - ix / this.HistoryCount);
+      this.color.setAlpha(alpha);
+      this.p.stroke(this.color);
+      this.p.point(hist.x, hist.y);
+    });
+
     this.p.endShape();
     this.p.pop();
+
+    this.color.setAlpha(255);
+    super.Draw();
+    
   }
 }
