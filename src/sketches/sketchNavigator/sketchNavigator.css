@@ -1,0 +1,36 @@
+.sketch-navigator {
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.sketch-card-container {
+  padding: 1rem;
+  border-radius: 5px;
+  /* background: radial-gradient(#fff, #eee); */
+  background: #eee;
+  box-shadow: #64646f33 0px 7px 29px 0px;
+  transition: all ease-in-out 300ms;
+  text-align: left;
+  width: 300px;
+}
+
+.sketch-card-container:hover {
+  box-shadow: #00000059 0px 5px 15px;
+  /* backdrop-filter: brightness(0%); */
+  filter: brightness(95%);
+  /* background: radial-gradient(#eee, #ccc, #ccc); */
+
+}
+
+.sketch-card-container a {
+  color: initial
+}
+
+.sketch-card-name {
+  
+}
+.sketch-card-description {
+  font-size: 0.75rem;
+}
