@@ -1,0 +1,23 @@
+{
+  "p5-new-sketch": {
+    "scope": "typescriptreact",
+    "prefix": "p5-new-sketch",
+    "description": "setup a new p5 sketch using withP5",
+    "body": [
+      "import { FC } from \"react\";",
+      "import p5Types from \"p5\";",
+      "import { WithP5 } from \"../../components/withP5\";",
+      "",
+      "const sketch = (p5: p5Types) => {",
+      "  p5.setup = () => {",
+      "    p5.createCanvas($2, $3);",
+      "    $4"
+      "  };",
+      "};",
+      "",
+      "export const $1: FC = () => {",
+      "  return <WithP5 sketch={sketch} />;",
+      "};"
+    ]
+  }
+}
