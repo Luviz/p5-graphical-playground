@@ -1,9 +1,10 @@
 import { FC, useEffect, useRef } from "react";
 import p5Types from "p5";
 import p5 from "p5";
+import { WithP5 } from "../../components/withP5";
 
 const SHADER_PATH = "/shaders/shaderTest";
-function sketch(p5: p5Types) {
+const sketch = (p5: p5Types) => {
   let myShader: p5Types.Shader;
   p5.preload = () => {
     myShader = p5.loadShader(
@@ -13,7 +14,7 @@ function sketch(p5: p5Types) {
   };
 
   p5.setup = () => {
-    p5.createCanvas(400, 400, p5.WEBGL);
+    p5.createCanvas(800, 600, p5.WEBGL);
     p5.background(0);
   };
 
@@ -27,14 +28,5 @@ function sketch(p5: p5Types) {
 }
 
 export const ShaderTest: FC = () => {
-  const p5ContainerRef = useRef<any>();
-
-  useEffect(() => {
-    const p5Instance = new p5(sketch, p5ContainerRef.current);
-    return () => {
-      p5Instance.remove();
-    };
-  }, []);
-
-  return <div ref={p5ContainerRef} />;
+  return <WithP5 sketch={sketch}/>;
 };
