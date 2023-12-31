@@ -2,16 +2,13 @@ import { FC, useEffect, useRef } from "react";
 import p5Types from "p5";
 import p5 from "p5";
 import { WithP5 } from "../../components/withP5";
+import { loadShader } from "../../util/shaders";
 
-const SHADER_PATH = "/shaders/shaderTest";
 const sketch = (p5: p5Types) => {
   const [width, height] = [800, 600];
   let myShader: p5Types.Shader;
   p5.preload = () => {
-    myShader = p5.loadShader(
-      `${SHADER_PATH}/shader.vert`,
-      `${SHADER_PATH}/shader.frag`
-    );
+    myShader = loadShader(p5, 'shaderTest');
   };
 
   p5.setup = () => {
