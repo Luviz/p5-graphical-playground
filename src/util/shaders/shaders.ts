@@ -13,6 +13,22 @@ const shadersPaths = {
     vertPath: COMMON_VERT_PATH,
     fragPath: join([ROOT_PATH, "shaderTest2", "shader.frag"], "/"),
   },
+  shaderTestCircle: {
+    vertPath: COMMON_VERT_PATH,
+    fragPath: join([ROOT_PATH, "shapeDistanceFn", "circle.frag"], "/"),
+  },
+  shaderTestRectangle: {
+    vertPath: COMMON_VERT_PATH,
+    fragPath: join([ROOT_PATH, "shapeDistanceFn", "rect.frag"], "/"),
+  },
+  shaderTestCross: {
+    vertPath: COMMON_VERT_PATH,
+    fragPath: join([ROOT_PATH, "shapeDistanceFn", "cross.frag"], "/"),
+  },
+  shaderTestBoolean: {
+    vertPath: COMMON_VERT_PATH,
+    fragPath: join([ROOT_PATH, "shapeDistanceFn", "boolean.frag"], "/"),
+  },
 };
 
 export const loadShader = (p5: p5Types, key: keyof typeof shadersPaths) =>

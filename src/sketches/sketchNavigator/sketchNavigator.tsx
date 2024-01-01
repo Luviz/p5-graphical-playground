@@ -5,7 +5,7 @@ import { SketchCard, SketchCardProp } from "./sketchCard";
 import { Gravity } from "../gravity";
 import { Gravity2 } from "../gravity/gravity2Sketch";
 import { MandelbrotSet2Sketch, MandelbrotSetSketch } from "../MandelbrotSet";
-import { ShaderTest, ShaderTestTwo } from "../shader";
+import { ShaderTest, ShaderTestTwo, Shapes } from "../shader";
 
 type SketchType = SketchCardProp & RouteObject;
 
@@ -48,10 +48,16 @@ const _sketches: SketchType[] = [
     element: <ShaderTest />,
   },
   {
-    name: "Shader Test I",
+    name: "Shader Test II",
     description: "Working with webGL",
     path: "/sketch/shader_2",
     element: <ShaderTestTwo />,
+  },
+  {
+    name: "Shader Shapes",
+    description: "Working with webGL shader SDF",
+    path: "/sketch/shader_shape",
+    element: <Shapes />,
   },
 ];
 
