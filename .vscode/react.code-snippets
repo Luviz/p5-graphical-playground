@@ -9,8 +9,10 @@
       "import { WithP5 } from \"../../components/withP5\";",
       "",
       "const sketch = (p5: p5Types) => {",
+      "const [width, height] = [$2, $3];",
+      "",
       "  p5.setup = () => {",
-      "    p5.createCanvas($2, $3);",
+      "    p5.createCanvas(width, height);",
       "    $4"
       "  };",
       "};",

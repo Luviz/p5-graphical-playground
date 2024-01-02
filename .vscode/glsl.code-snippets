@@ -1,0 +1,18 @@
+{
+  "p5-new-sketch": {
+    "scope": "glsl",
+    "prefix": "p5-new-frag",
+    "description": "Fragment shader bolierplate",
+    "body": [
+      "precision mediump float;",
+      "",
+      "varying vec2 v_pos;",
+      "",
+      "void main() {",
+      "  // vec2 uv = v_pos.xy * 2.0 - 1.0;"
+      "  vec2 st = (2. * gl_FragCoord.xy - u_resolution.xy) / u_resolution.y;"
+      "  gl_FragColor = vec4(uv, 0., 1.);",
+      "}"
+    ]
+  }
+}
