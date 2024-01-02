@@ -1,12 +1,29 @@
-precision mediump float;
+precision highp float;
 
 #define PI 3.14159265359
 
 uniform vec3 u_mouse;
 uniform vec2 u_resolution;
 uniform float u_time;
+uniform mat4 u_color_sets;
+uniform sampler2D u_some;
+
+vec3 color_palette(float t) {
+  vec3 color_a = u_color_sets[0].rgb;
+  vec3 color_b = u_color_sets[1].rgb;
+  vec3 color_c = u_color_sets[2].rgb;
+  vec3 color_d = u_color_sets[3].rgb;
+
+  return color_a + color_b * cos(6.28318 * (color_c * t + color_d));
+}
+
+float mapRange(float value, vec2 inRange, vec2 outRange) {
+  float t = (value - inRange.x) / (inRange.y - inRange.x);
+  return outRange.x + t * (outRange.y - outRange.x);
+}
 
 float sdSphere(vec3 p, float s) {
+  texture2D(u_some, vec2(0, 1));
   return length(p) - s;
 }
 
@@ -26,9 +43,9 @@ mat2 rotate_2d(float angle) {
   return mat2(c, -s, s, c);
 }
 
-float smin(float a, float b, float pct) {
-  float h = max(pct - abs(a - b), 0.) / pct;
-  return min(a, b) - h * h * h * pct * (1. / 6.);
+float smin(float a, float b, float k) {
+  float h = max(k - abs(a - b), 0.) / k;
+  return min(a, b) - h * h * h * k * (1. / 6.);
 }
 
 float get_box(in vec3 p) {
@@ -45,6 +62,7 @@ float get_fracts(in vec3 p) {
   float sec = u_time / 1000.;
 
   q.y -= sec * .2;
+  q.z -= sec * -.1;
 
   q = fract(q) - 0.5;
   q.xy *= rotate_2d(sec);
@@ -92,22 +110,30 @@ void main() {
     ray_dir.xz *= rotate_2d(-mouse.x);
   }
 
-  // Raymarching 
+  // Raymarching
+  const float max_iter = 100.;
+  const float max_dist = 100.;
   float distance_traved = 0.;
-  for(float i = 0.; i < 80.; i++) {
+  for(float i = 0.; i < max_iter; i++) {
     vec3 current_pos = ray_org + ray_dir * distance_traved;
     float dist = map(current_pos);
 
     distance_traved += dist;
+    // col = vec3(i / 100.);
 
     if(dist < .001)
       break;
-    if(distance_traved > 100.)
+    if(distance_traved > max_dist)
       break;
   }
 
-  float t = 0.5 + 0.5 * sin(u_time / 1000.);
-  col = vec3(distance_traved * 0.13);
+  // float norm_distance_traved = mapRange(distance_traved, vec2(0., 100.), vec2(0., .002));
+  float sec = u_time / 1000.;
+  float t = 0.05 * sin(sec);
+  float m = .1 - t;
+  // m -= t;
+  col = vec3(distance_traved * m);
   col = smoothstep(vec3(1.), vec3(0), col);
+  col *= color_palette(distance_traved + u_time / 5000.);
   gl_FragColor = vec4(col, 1.);
 }
