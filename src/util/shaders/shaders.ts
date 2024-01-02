@@ -13,6 +13,10 @@ const shadersPaths = {
     vertPath: COMMON_VERT_PATH,
     fragPath: join([ROOT_PATH, "shaderTest2", "shader.frag"], "/"),
   },
+  rayMarching: {
+    vertPath: COMMON_VERT_PATH,
+    fragPath: join([ROOT_PATH, "rayMarching", "rayMarching.frag"], "/"),
+  },
   shaderTestCircle: {
     vertPath: COMMON_VERT_PATH,
     fragPath: join([ROOT_PATH, "shapeDistanceFn", "circle.frag"], "/"),

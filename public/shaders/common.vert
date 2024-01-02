@@ -5,8 +5,5 @@ varying vec2 v_pos;
 void main() {
   v_pos = aTexCoord;
   
-  vec4 positionVec4 = vec4(aPosition, 1.0);
-  positionVec4.xy = positionVec4.xy * 2.0 - 1.0;
-
-  gl_Position = positionVec4;
+  gl_Position = vec4(aPosition * 2.0 - 1.0, 1.0);
 }
