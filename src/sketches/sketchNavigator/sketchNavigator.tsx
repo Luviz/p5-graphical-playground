@@ -6,7 +6,7 @@ import { Gravity } from "../gravity";
 import { Gravity2 } from "../gravity/gravity2Sketch";
 import { MandelbrotSet2Sketch, MandelbrotSetSketch } from "../MandelbrotSet";
 import { ShaderTest, ShaderTestTwo, Shapes } from "../shader";
-import { RayMarching } from "../rayMarching";
+import { RayMarching, RayMarchingLight } from "../rayMarching";
 
 type SketchType = SketchCardProp & RouteObject;
 
@@ -62,9 +62,15 @@ const _sketches: SketchType[] = [
   },
   {
     name: "Ray marching",
-    description: "Working with webGL shader SDF",
+    description: "Ray marching",
     path: "/sketch/ray_marching",
     element: <RayMarching />,
+  },
+  {
+    name: "Ray marching light",
+    description: "Ray marching working with lights",
+    path: "/sketch/ray_marching_light",
+    element: <RayMarchingLight />,
   },
 ];
 
