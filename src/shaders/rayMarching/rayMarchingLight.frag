@@ -45,7 +45,6 @@ float mapGround(vec3 p) {
   return g;
 }
 
-
 float map(vec3 p) {
   float d = min(mapBox(p), mapSphere(p));
   float g = mapGround(p);
@@ -110,6 +109,6 @@ void main() {
 
   float dif = getLight(point);
   color = vec3(dif);
-
+  color *= vec3(0.49, 0.52, 0.35);
   gl_FragColor = vec4(color, 1.);
 }
