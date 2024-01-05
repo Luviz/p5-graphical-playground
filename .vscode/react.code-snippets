@@ -6,7 +6,7 @@
     "body": [
       "import { FC } from \"react\";",
       "import p5Types from \"p5\";",
-      "import { WithP5 } from \"../../components/withP5\";",
+      "import { WithP5 } from \"@/components/withP5\";",
       "",
       "const sketch = (p5: p5Types) => {",
       "const [width, height] = [$2, $3];",
