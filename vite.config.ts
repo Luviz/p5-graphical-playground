@@ -1,9 +1,21 @@
 import { defineConfig, splitVendorChunkPlugin } from "vite";
 import react from "@vitejs/plugin-react-swc";
+import plainText from "vite-plugin-plain-text";
+import path from 'path';
+
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react(), splitVendorChunkPlugin()],
+  resolve: {
+    alias: {
+      '@': path.resolve(__dirname, './src'),
+    },
+  },
+  plugins: [
+    react(),
+    plainText(["**/*.text", "**/*.glsl", "**/*.frag", "**/*.vert"], {}),
+    splitVendorChunkPlugin(),
+  ],
   build: {
     chunkSizeWarningLimit: 1000,
     rollupOptions: {

@@ -1,7 +1,8 @@
 import { FC } from "react";
 import p5Types from "p5";
-import { WithP5 } from "../../components/withP5";
-import { loadShader } from "../../util/shaders";
+import { plainText as VERT } from "@/shaders/common.vert";
+import { plainText as FRAG } from "@/shaders/rayMarching/rayMarching.frag";
+import { WithP5 } from "@/components/withP5";
 
 const colorSets = {
   rainbow: [
@@ -42,7 +43,9 @@ const sketch = (p5: p5Types) => {
   let rayMarchingShader: p5Types.Shader;
 
   p5.preload = () => {
-    rayMarchingShader = loadShader(p5, "rayMarching");
+    // console.log(FRAG);
+
+    rayMarchingShader = p5.createShader(VERT, FRAG);
   };
   p5.setup = () => {
     p5.createCanvas(width, height, p5.WEBGL);
