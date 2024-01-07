@@ -20,31 +20,27 @@ float plot(float d) {
   return 1.0 - smoothstep(0.0, 0.01, abs(d));
 }
 
-mat2 rotate_2d(float angle) {
-  float s = sin(angle);
-  float c = cos(angle);
-  return mat2(c, -s, s, c);
+float smoothstep_clamp(float edge0, float edge1, float x) {
+    float t = clamp((x - edge0) / (edge1 - edge0), 0.0, 1.0);
+    return t * t * (3.0 - 2.0 * t);
 }
 
 float zoom() {
-  float x = u_time / 5000.;
-  // x = PI * 1.;
-  float v =  0.745 * cos(x) + 0.755;
-  return v;
+    float x = u_time / 5000.0;
+    float v = 1.2 * cos(x) + 1.0;
+
+    float smooth_clamped_v = smoothstep_clamp(0.001, 2.0, v);
+    
+    return mix(0.001, 2.0, smooth_clamped_v);
 }
-
-
 
 void main() {
   vec2 uv = v_pos.xy * 2.0 - 1.0;
   vec2 q = uv * zoom();
-  // vec2 st = (zoom() * gl_FragCoord.xy - u_resolution.xy) / u_resolution.y;
-  // st += 0.15;
-  // st.x -= 0.29; // * sin(u_time / 10000.);
-  // st.y += 0.57; // * cos(u_time / 10000.);
+
   q.x -= 0.74;
   q.y += .14;
-  // st *= rotate_2d(u_time / 7000.);
+
   vec3 color = vec3(.0);
   float _realComp = q.x;
   float _imagComp = q.y;
@@ -60,6 +56,6 @@ void main() {
       break;
     }
   }
-  // color = mix(color, vec3(1.), plot(.05 - length(uv)));
+
   gl_FragColor = vec4(color, 1.);
 }
