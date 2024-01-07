@@ -4,7 +4,7 @@ import { RouteObject } from "react-router-dom";
 import { SketchCard, SketchCardProp } from "./sketchCard";
 import { Gravity } from "../gravity";
 import { Gravity2 } from "../gravity/gravity2Sketch";
-import { MandelbrotSet2Sketch, MandelbrotSetSketch } from "../MandelbrotSet";
+import { MandelbrotSet2Sketch, MandelbrotSetSketch, MandelbrotShader } from "../MandelbrotSet";
 import { ShaderTest, ShaderTestTwo, Shapes } from "../shader";
 import { RayMarching, RayMarchingLight } from "../rayMarching";
 import { SquareWave } from "../waves";
@@ -40,8 +40,14 @@ const _sketches: SketchType[] = [
   {
     name: "Mandelbrot Set II",
     description: "The MandelbrotSet faster",
-    path: "/sketch/mandelbrotSet2",
+    path: "/sketch/mandelbrotSet3",
     element: <MandelbrotSet2Sketch />,
+  },
+  {
+    name: "Mandelbrot Set With shader",
+    description: "The MandelbrotSet using Shaders",
+    path: "/sketch/mandelbrotSet2",
+    element: <MandelbrotShader />,
   },
   {
     name: "Shader Test I",
