@@ -7,6 +7,7 @@ import { Gravity2 } from "../gravity/gravity2Sketch";
 import { MandelbrotSet2Sketch, MandelbrotSetSketch } from "../MandelbrotSet";
 import { ShaderTest, ShaderTestTwo, Shapes } from "../shader";
 import { RayMarching, RayMarchingLight } from "../rayMarching";
+import { SquareWave } from "../waves";
 
 type SketchType = SketchCardProp & RouteObject;
 
@@ -71,6 +72,12 @@ const _sketches: SketchType[] = [
     description: "Ray marching working with lights",
     path: "/sketch/ray_marching_light",
     element: <RayMarchingLight />,
+  },
+  {
+    name: "Waves square",
+    description: "Plotting a square",
+    path: "/sketch/waves_sq",
+    element: <SquareWave />,
   },
 ];
 
