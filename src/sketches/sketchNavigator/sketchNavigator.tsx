@@ -8,6 +8,7 @@ import { MandelbrotSet2Sketch, MandelbrotSetSketch, MandelbrotShader } from "../
 import { ShaderTest, ShaderTestTwo, Shapes } from "../shader";
 import { RayMarching, RayMarchingLight } from "../rayMarching";
 import { SquareWave } from "../waves";
+import { ColorPalettes } from "../colorPalettes/colorPalettes";
 
 type SketchType = SketchCardProp & RouteObject;
 
@@ -85,6 +86,12 @@ const _sketches: SketchType[] = [
     path: "/sketch/waves_sq",
     element: <SquareWave />,
   },
+  {
+    name: "Palettes",
+    description: "working with cos color palettes",
+    path: "/sketch/palettes",
+    element: <ColorPalettes />,
+  }
 ];
 
 export const SketchNavigator: FC = () => {
