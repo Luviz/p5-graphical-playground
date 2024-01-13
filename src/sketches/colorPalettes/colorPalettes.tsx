@@ -1,10 +1,9 @@
-import { ChangeEvent, FC, useEffect, useMemo, useState } from "react";
-import p5Types from "p5";
 import { WithP5 } from "@/components/withP5";
 import { plainText as VERT } from "@/shaders/common.vert";
-import { plainText as FRAG } from "./colorPalette.frag";
-import { json, normalizeHash } from "@remix-run/router/dist/utils";
 import { useLocalStorage } from "@/util/hook";
+import p5Types from "p5";
+import { FC, useEffect, useMemo, useState } from "react";
+import { plainText as FRAG } from "./colorPalette.frag";
 
 const getValueFromElement = (id: string) => {
   const elem = document.getElementById(id);
