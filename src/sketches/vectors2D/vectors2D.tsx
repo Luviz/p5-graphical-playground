@@ -3,6 +3,7 @@ import p5Types from "p5";
 import { WithP5 } from "@/components/withP5";
 import { useSessionStorage } from "@/util/hook";
 import styled from "@emotion/styled";
+import * as mathjs from "mathjs";
 
 const vec2Zero: Vec2 = { x: 0, y: 0 };
 const interfaceZero: Interface = {
@@ -30,7 +31,7 @@ const getInterface = (): Interface => {
 };
 
 const sketch = (p5: p5Types) => {
-  const UNIT = 100;
+  const UNIT = 1;
 
   const [width, height] = [800, 400];
 
@@ -40,34 +41,62 @@ const sketch = (p5: p5Types) => {
 
   p5.draw = () => {
     const inter = getInterface();
-    const [v1, v2, v3] = [inter.v1, inter.v2, inter.v3].map(getVector2);
 
-    p5.translate(width / 2, height / 2);
-    p5.scale(1, -1);
-    p5.background(200);
+    const sec = p5.millis() / 1_000;
 
+    const [[m1, nm1], [m2, nm2], [m3, nm3]] = [
+      inter.v1,
+      inter.v2,
+      inter.v3,
+    ].map(({ x, y }) => [
+      mathjs.matrix([x, y]),
+      mathjsNormalize(mathjs.matrix([x, y])),
+    ]);
+
+    const rotTime = rot2d(sec);
+    const m1Rot = mathjs.multiply(m1, rotTime);
+
+    setScene();
     drawGrid();
 
-    const v12 = v1.copy().sub(v2);
-    const [nV1, nV2, nV3] = [v1, v2, v3].map((v) => v.copy().normalize());
-    const nV1Sub2 = nV1.copy().sub(nV2).normalize();
-    const v1sub2 = v1.copy().sub(v2);
-    const reflection = v2.copy().add(nV1);
+    drawVectorMat(m1, [200, 0, 0]);
+    drawVectorMat(m2, [0, 100, 0]);
+    drawVectorMat(nm1, [0, 0, 0, 128]);
+    drawVectorMat(nm2, [0, 0, 0, 128]);
 
-    // drawVector(v1, [150, 0, 0]);
-    drawVector(v2, [0, 100, 0]);
-    drawVector(nV1.copy().mult(UNIT), [0, 0, 0, 80]);
-    drawVector(v2.copy().sub(nV1.copy().mult(UNIT)), [100, 0, 0, 80]);
-    // drawVector(nV2.copy().mult(UNIT), [0, 0, 0, 80]);
-    // drawVector(nV1Sub2.copy().mult(UNIT), [0, 0, 0, 80]);
-    drawVector(reflection, [100, 0, 200, 80]);
+    drawVectorMat(mathjs.add(m1, m2), [0, 100, 0]);
+    drawVectorMat(mathjs.add(m2, m1), [100, 100, 100], { x: 1, y: 1 });
 
-    // drawVector(v1.add(v2), [0, 0, 0]);
-    // p5.line(0, 0, inter.v1.x || 0, inter.v1.y || 0);
+    drawVectorMat(m1Rot, [100, 100, 100]);
+    drawVectorMat(mathjs.add(m1Rot, m1), [200, 200, 200]);
   };
   const getVector2 = ({ x, y }: Vec2) => {
-    return p5.createVector(x, y, 0);
+    return p5.createVector(x, y);
   };
+  const matrixToP5Vector = (mat: mathjs.Matrix) => {
+    const isVec = mat.size().length == 1;
+    let v = isVec ? mat.toArray() : mat.toArray()[0];
+    const [x, y, z] = v as number[];
+
+    return p5.createVector(x, y, z);
+  };
+
+  const mathjsNormalize = (mat: mathjs.Matrix) => {
+    return mathjs.divide(mat, mathjs.norm(mat)) as mathjs.Matrix;
+  };
+
+  const p5VectorToMatrix = ({ x, y, z }: p5Types.Vector) => {
+    return mathjs.matrix([x, y, z]);
+  };
+
+  const drawVectorMat = (
+    mat: mathjs.Matrix,
+    color: number[],
+    org: Vec2 | p5Types.Vector = vec2Zero
+  ) => {
+    return drawVector(matrixToP5Vector(mat), color, org);
+  };
+
   const drawVector = (
     { x, y }: Vec2 | p5Types.Vector,
     color: number[],
@@ -75,21 +104,23 @@ const sketch = (p5: p5Types) => {
   ) => {
     p5.push();
     p5.stroke(color);
-    p5.strokeWeight(5);
+    p5.fill(color);
+    p5.strokeWeight(0.1);
     p5.line(oX, oY, x, y);
+
     p5.pop();
   };
 
   const drawGrid = () => {
-    const drawUnitCircle = (weight = 1) => {
+    const drawUnitCircle = (weight = 0.01) => {
       p5.strokeWeight(weight);
-      p5.circle(0, 0, UNIT * 2);
+      p5.circle(0, 0, 2);
     };
-    const drawHLines = (y: number, weight = 1) => {
+    const drawHLines = (y: number, weight = 0.01) => {
       p5.strokeWeight(weight);
       p5.line(-width, y, width, y);
     };
-    const drawVLines = (x: number, weight = 1) => {
+    const drawVLines = (x: number, weight = 0.01) => {
       p5.strokeWeight(weight);
       p5.line(x, -height, x, height);
     };
@@ -97,19 +128,34 @@ const sketch = (p5: p5Types) => {
     p5.push();
     p5.noFill();
     p5.stroke([80, 80, 80, 228]);
-    for (let y = -height / 2; y < height / 2; y += UNIT) {
+    for (let y = -height / 2; y < height / 2; y += 1) {
       drawHLines(y);
     }
-    for (let x = -width / 2; x < width / 2; x += UNIT) {
+    for (let x = -width / 2; x < width / 2; x += 1) {
       drawVLines(x);
     }
     drawUnitCircle();
-    drawHLines(0, 3);
-    drawVLines(0, 3);
+    drawHLines(0, 0.03);
+    drawVLines(0, 0.03);
     p5.pop();
+  };
+
+  const setScene = () => {
+    p5.translate(width / 2, height / 1.5);
+    let scaleFactor = p5.min(width / 7, height / 7);
+    p5.scale(scaleFactor, -scaleFactor);
+    p5.background(250);
   };
 };
 
+const print = (val: any) => console.log(mathjs.format(val, 2));
+const rot2d = (angle: number) => {
+  const [s, c] = [mathjs.sin(angle), mathjs.cos(angle)];
+  return mathjs.matrix([
+    [c, -s],
+    [s, c],
+  ]);
+};
 export const Vectors2D: FC = () => {
   return (
     <div>
