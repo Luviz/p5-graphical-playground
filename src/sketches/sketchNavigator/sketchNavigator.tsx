@@ -4,11 +4,16 @@ import { RouteObject } from "react-router-dom";
 import { SketchCard, SketchCardProp } from "./sketchCard";
 import { Gravity } from "../gravity";
 import { Gravity2 } from "../gravity/gravity2Sketch";
-import { MandelbrotSet2Sketch, MandelbrotSetSketch, MandelbrotShader } from "../MandelbrotSet";
+import {
+  MandelbrotSet2Sketch,
+  MandelbrotSetSketch,
+  MandelbrotShader,
+} from "../MandelbrotSet";
 import { ShaderTest, ShaderTestTwo, Shapes } from "../shader";
 import { RayMarching, RayMarchingLight } from "../rayMarching";
 import { SquareWave } from "../waves";
 import { ColorPalettes } from "../colorPalettes/colorPalettes";
+import { Vectors2D } from "../vectors2D";
 
 type SketchType = SketchCardProp & RouteObject;
 
@@ -91,7 +96,13 @@ const _sketches: SketchType[] = [
     description: "working with cos color palettes",
     path: "/sketch/palettes",
     element: <ColorPalettes />,
-  }
+  },
+  {
+    name: "Vector 2D",
+    description: "visualizing liner algebra operation",
+    path: "/sketch/vectors/2D/base",
+    element: <Vectors2D />,
+  },
 ];
 
 export const SketchNavigator: FC = () => {
